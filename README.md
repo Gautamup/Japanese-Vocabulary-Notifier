@@ -1,5 +1,4 @@
 # 🇯🇵 Japanese Word Notifier
-## Japanese Vocabulary Notifier
 
 A simple yet effective Python program designed to help you learn Japanese vocabulary effortlessly. It periodically displays notifications on your Windows desktop, showing Japanese words along with their English meanings, and even pronounces them in a native Japanese accent. Perfect for passive learning while working or studying!
 
@@ -14,6 +13,9 @@ A simple yet effective Python program designed to help you learn Japanese vocabu
 ## 🔜 Features to be Added
 - ⏰ **Customizable Intervals:** Control how frequently you receive new words.
 - 📚 **Expandable Vocabulary:** Easily modify the word list to suit your learning needs.
+- ✍️ **Modify Vocabulary:** Edit the `words.json` file to include your own list of Japanese words and their meanings.
+- ⏳ **Adjust Timing:** Change the notification interval in the script to fit your learning pace.
+- 🎵 **Voice Options:** Experiment with different voice settings in `gTTS` to match your preferences.
 
 ---
 
@@ -55,13 +57,6 @@ You will see periodic pop-ups displaying words along with their pronunciation!
 
 ---
 
-## 🔧 Customization
-- ✍️ **Modify Vocabulary:** Edit the `words.json` file to include your own list of Japanese words and their meanings.
-- ⏳ **Adjust Timing:** Change the notification interval in the script to fit your learning pace.
-- 🎵 **Voice Options:** Experiment with different voice settings in `gTTS` to match your preferences.
-
----
-
 ## 🤝 Contributing
 We welcome contributions! If you have suggestions or improvements, feel free to fork the repository and submit a pull request.
 
@@ -73,4 +68,3 @@ This project is licensed under the **MIT License**—free to use and modify!
 ---
 
 🌸 **Happy Learning!** 🌸
-
