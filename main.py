@@ -1,88 +1,58 @@
 from winotify import Notification, audio
 import time
 from gtts import gTTS
-import pygame
-
 from io import BytesIO
 import random
 import schedule
+import ast
+import pygame
+from dotenv import load_dotenv
+from google import genai
+from google.genai import types
+import os
+import os
+
+load_dotenv()
+
+api_key = os.getenv("GOOGLE_API_KEY")
+
+client = genai.Client()
 
 def main():
-    list=["love あい ",
-    "red あか aka",
-    "house いえ ie",
-    "squid いか ika",
-    "train station えき eki",
-    "top うえ ue",
-    "face かお kao",
-    "oyster かき kaki",
-    "chrysanthemum きく kiku",
-    "carp こい koi",
-    "cow うし ushi",
-    "lie うそ uso",
-    "umbrella かさ kasa",
-    "sushi すし sushi",
-    "world せかい sekai",
-    "octopus たこ tako",
-    "subway ちかてつ chikatetsu",
-    "moon つき tsuki",
-    "home uchi",
-    "hand te",
-    "eagle taka",
-    "basement chika",
-    "iron tetsu",
-    "dog いぬ inu",
-    "fish さかな sakana",
-    "sand すな suna",
-    "summer なつ natsu",
-    "meat にく niku",
-    "cat ねこ neko",
-    "flower はな hana",
-    "fire ひ hi",
-    "ship ふね fune",
-    "star ほし hoshi",
-    "chopsticks hashi",
-    "country kuni",
-    "pear nashi",
-    "hole ana",
-    "grave haka",
-    "foot/leg あし ashi",
-    "head あたま atama",
-    "belly おなか onaka",
-    "face かお kao",
-    "mouth くち kuchi",
-    "back せなか senaka",
-    "nose はな hana",
-    "ear みみ mimi",
-    "eye め me",
-    "あめ ame rain",
-    "いし ishi stone",
-    "いわ iwa rock",
-    "うみ umi ocean",
-    "かわ kawa river",
-    "き ki tree",
-    "くも kumo cloud",
-    "そら sora sky",
-    "たに tani valley",
-    "つき tsuki the moon",
-    "つち tsuchi soil",
-    "ひ hi fire",
-    "ほし hoshi star",
-    "やま yama mountain",
-    "ゆき yuki snow",
-    "father おとうさん otōsan",
-    "mother おかあさん okāsan",
-    "older brother おにいさん onīsan",
-    "older sister おねえさん onēsan" ,
-    "teacher せんせい sensei",
-    "ice こおり kōri",
-    "street とうり tōri",
-    "postage stamp きって kitte"]
-    pick= random.choice(list)
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        config=types.GenerateContentConfig(
+            system_instruction="""You are a Japanese vocabulary generator. 
+                Your task is to output useful Japanese words for learners. 
+                Each entry must include one English word followed by its Japanese translation in Hiragana or Katakana, separated by a space.
+                Do not include Romaji or explanations.
+
+                Format strictly like this:
+                love あい
+                red あか
+                cat ねこ
+
+                Generate 10 new random words each time.
+                The words must be in a python list
+                """,
+            thinking_config=types.ThinkingConfig(thinking_budget=0)
+        ),
+        contents="Generate a new list of Japanese words.",
+        
+    )
+    llm_output = response.text
+    # Extract and safely evaluate the Python list
+    start = llm_output.find('[')
+    end = llm_output.rfind(']') + 1
+    list_str = llm_output[start:end]
+
+    words = ast.literal_eval(list_str)
+
+    pick= random.choice(words)
 
     notify= Notification(app_id="python",
                         title="The Word is",
-                        msg=pick,duration="short",icon=r"C:\Users\upadh\Desktop\Coding\Python\New japanese word\img.jpg")
+                        msg=pick,duration="short",icon=r"C:\Users\upadh\Desktop\Coding\Japanese-Vocabulary-Notifier\img.jpg")
 
     notify.show()
     def speak(text):
